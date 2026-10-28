@@ -45,7 +45,8 @@ No blocking bugs introduced by this PR.
 
 **Impact.**
 - Front end (visitor) is **not affected**: a published page with the Typing Text block loaded `typed.min.js`, `eb-animation-load.js` and `frontend/index.js` with **no page errors**, because `document.body` exists there.
-- Editor: an uncaught console error on every editor load, and the animation initialisation is skipped in the canvas iframe. The user-visible effect of that skipped initialisation in the editor preview (animated blocks) was not measured.
+- Editor: an uncaught console error (intermittent: reproduced in 3 runs, absent in one, it depends on timing), and the animation initialisation is skipped in the canvas iframe.
+- **User-visible impact for Typing Text itself: none found.** The Typing Text block has no entrance-animation control: the built bundle (`dist/index.js`, `dist/frontend/index.js`) contains no `eb___` / `eb__` animation classes and no `eb-animation-style` select. The animation script is only loaded because the block's front-end script lists it as a dependency. So today this is console noise, not a broken feature.
 - Same on `dev`: reproduced on a branch that only adds the CSS of #35 (JS identical to `dev`), so it is not introduced by #34 or #35.
 - Not reproduced on Testimonial or Toggle Content in the same site. Whether their copy loads in the iframe was not checked, so the reason only Typing Text shows it is **not confirmed**.
 
